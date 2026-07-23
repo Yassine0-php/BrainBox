@@ -1,4 +1,4 @@
-console.log("Fichier connaissanceRoute chargé");
+
 const express = require("express");
 
 const router = express.Router();

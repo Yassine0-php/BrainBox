@@ -14,7 +14,7 @@ dotenv.config();
 const connectDB = require("./config/database");
 
 const connaissanceRoutes = require("./routes/connaissanceRoute.js");
-
+const iaRoutes = require("./routes/assistantRoute.js");
 
 
 connectDB();
@@ -36,6 +36,9 @@ app.use(
     "/api/connaissances",connaissanceRoutes
 );
 
+
+
+app.use("/api/assistant", iaRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend BrainBox fonctionne !");
