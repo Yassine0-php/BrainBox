@@ -162,3 +162,51 @@ exports.consulterConnaissance = async (req, res) => {
 
     }
 };
+
+
+// GET : rechercher des connaissances
+exports.rechercherConnaissances = async (req, res) => {
+
+    try {
+
+        const { mot } = req.query;
+
+        const connaissances = await Connaissance.find({
+            $or: [
+                {
+                    titre: {
+                        $regex: mot,
+                        $options: "i"
+                    }
+                },
+                {
+                    contenu: {
+                        $regex: mot,
+                        $options: "i"
+                    }
+                },
+                {
+                    categorie: {
+                        $regex: mot,
+                        $options: "i"
+                    }
+                },
+                {
+                    tags: {
+                        $regex: mot,
+                        $options: "i"
+                    }
+                }
+            ]
+        });
+
+        res.status(200).json(connaissances);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+};

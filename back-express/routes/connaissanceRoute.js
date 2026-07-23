@@ -29,6 +29,12 @@ router.delete(
     connaissanceController.supprimerConnaissance
 );
 
+// rechercher des connaissances
+router.get(
+    "/recherche",
+    connaissanceController.rechercherConnaissances
+);
+
 // consulter une connaissance
 router.get(
     "/:id",

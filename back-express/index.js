@@ -33,12 +33,7 @@ app.use(cors());
 // );
 
 app.use(
-    "/api/connaissances",
-    (req, res, next) => {
-        console.log("API CONNAISSANCES TOUCHÉE");
-        next();
-    },
-    connaissanceRoutes
+    "/api/connaissances",connaissanceRoutes
 );
 
 
