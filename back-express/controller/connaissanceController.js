@@ -111,3 +111,56 @@ exports.listerConnaissances = async (req, res) => {
     }
 
 };
+
+// DELETE : supprimer une connaissance
+exports.supprimerConnaissance = async (req, res) => {
+
+    try {
+
+        const connaissanceSupprimee = await Connaissance.findOneAndDelete({
+            id: req.params.id
+        });
+
+        if (!connaissanceSupprimee) {
+            return res.status(404).json({
+                message: "Connaissance introuvable"
+            });
+        }
+
+        res.status(200).json({
+            message: "Connaissance supprimée",
+            connaissance: connaissanceSupprimee
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+// GET : consulter une connaissance par son id
+exports.consulterConnaissance = async (req, res) => {
+
+    try {
+
+        const connaissance = await Connaissance.findOne({
+            id: Number(req.params.id)
+        });
+
+        if (!connaissance) {
+            return res.status(404).json({
+                message: "Connaissance introuvable"
+            });
+        }
+        
+        res.status(200).json(connaissance);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+};

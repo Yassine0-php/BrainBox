@@ -27,17 +27,26 @@ app.use(express.json());
 app.use(cors());
 
 
+// app.use(
+//     "/api/connaissances",
+//     connaissanceRoutes
+// );
+
 app.use(
     "/api/connaissances",
+    (req, res, next) => {
+        console.log("API CONNAISSANCES TOUCHÉE");
+        next();
+    },
     connaissanceRoutes
 );
-
-
 
 
 app.get("/", (req, res) => {
   res.send("Backend BrainBox fonctionne !");
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Serveur lancé sur le port ${PORT}`);
