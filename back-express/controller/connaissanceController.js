@@ -67,7 +67,6 @@ exports.modifierConnaissance = async(req,res)=>{
             }
         );
 
-
         if(!connaissanceModifiee){
 
             return res.status(404).json({
@@ -89,7 +88,6 @@ exports.modifierConnaissance = async(req,res)=>{
         });
    
     }
-
 };
 
 
@@ -153,7 +151,7 @@ exports.consulterConnaissance = async (req, res) => {
                 message: "Connaissance introuvable"
             });
         }
-        
+
         res.status(200).json(connaissance);
 
     } catch (error) {
