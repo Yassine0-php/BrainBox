@@ -1,0 +1,34 @@
+<div 
+    class="message"
+    [class.user]="type === 'user'"
+    [class.ia]="type === 'ia'"
+>
+
+    <div class="author">
+        {{ auteur }}
+    </div>
+
+
+    <div class="content">
+
+        @if (contenu === "Réflexion en cours...") {
+
+            <div class="thinking">
+
+                <div class="loader"></div>
+
+                <span>
+                    Réflexion en cours...
+                </span>
+
+            </div>
+
+        } @else {
+
+            {{ contenu }}
+
+        }
+
+    </div>
+
+</div>

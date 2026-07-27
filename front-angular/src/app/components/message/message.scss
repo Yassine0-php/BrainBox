@@ -1,0 +1,114 @@
+:host {
+
+    display: flex;
+
+}
+
+
+
+.message {
+
+    width: fit-content;
+
+    max-width: 60%;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    color: white;
+
+}
+
+
+
+.user {
+
+    margin-left: auto;
+
+    background: #2563eb;
+
+}
+
+
+
+.ia {
+
+    margin-right: auto;
+
+    background: #444654;
+
+}
+
+
+
+.author {
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+
+    color: #10a37f;
+
+}
+
+
+
+.content {
+
+    color: #e5e7eb;
+
+}
+
+
+
+/* Conteneur du chargement */
+
+.thinking {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+
+/* Cercle qui tourne */
+
+.loader {
+
+    width: 14px;
+
+    height: 14px;
+
+    border: 3px solid #777;
+
+    border-top: 3px solid #10a37f;
+
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+
+}
+
+
+
+@keyframes spin {
+
+    from {
+
+        transform: rotate(0deg);
+
+    }
+
+
+    to {
+
+        transform: rotate(360deg);
+
+    }
+
+}

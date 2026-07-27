@@ -1,0 +1,43 @@
+<div class="chat">
+
+    <div class="header">
+        <h1>
+            Nouvelle discussion
+        </h1>
+    </div>
+
+
+    <div class="messages" #messagesContainer>
+
+        @for (message of messages; track $index) {
+
+            <app-message
+                [auteur]="message.auteur"
+                [contenu]="message.contenu"
+                [type]="message.type">
+            </app-message>
+
+        }
+
+    </div>
+
+
+    <div class="input-container">
+
+        <input
+            type="text"
+            placeholder="Écris ton message..."
+            [(ngModel)]="question"
+            (keydown.enter)="envoyer()"
+        >
+
+
+        <button
+            (click)="enCours ? arreter() : envoyer()"
+        >
+            {{ enCours ? "Arrêter" : "Envoyer" }}
+        </button>
+
+    </div>
+
+</div>
