@@ -4,89 +4,245 @@
     height: 100%;
 }
 
+/* ==========================
+   Chat principal
+========================== */
+
 .chat {
     display: flex;
     flex-direction: column;
     height: 100%;
 
-    background: #343541;
-    color: white;
+    background:
+        radial-gradient(circle at top right,
+            rgba(59, 130, 246, 0.08),
+            transparent 35%),
+        radial-gradient(circle at bottom left,
+            rgba(14, 165, 233, 0.05),
+            transparent 30%),
+        linear-gradient(180deg,
+            #111827 0%,
+            #0f172a 100%);
+
+    color: #f8fafc;
 }
 
+/* ==========================
+   Header
+========================== */
+
 .header {
-    padding: 20px;
-    border-bottom: 1px solid #4a4b52;
+
+    padding: 24px 32px;
+
+    backdrop-filter: blur(20px);
+
+    background: rgba(17, 24, 39, .65);
+
+    border-bottom: 1px solid rgba(255,255,255,.06);
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.25);
+
 }
 
 .header h1 {
+
     margin: 0;
-    font-size: 22px;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    letter-spacing: .5px;
+
+    color: white;
+
 }
+
+/* ==========================
+   Zone des messages
+========================== */
 
 .messages {
 
     flex: 1;
 
-    overflow-y: auto;
     min-height: 0;
 
+    overflow-y: auto;
 
     display: flex;
+
     flex-direction: column;
 
-    gap: 10px;
+    gap: 18px;
 
-    padding: 30px;
+    padding: 35px;
+
+    scroll-behavior: smooth;
 
 }
+
+/* Scrollbar */
+
+.messages::-webkit-scrollbar {
+
+    width: 10px;
+
+}
+
+.messages::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+.messages::-webkit-scrollbar-thumb {
+
+    background: rgba(255,255,255,.08);
+
+    border-radius: 20px;
+
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+
+    background: rgba(255,255,255,.15);
+
+}
+
+/* ==========================
+   Message de bienvenue
+========================== */
 
 .welcome {
-    margin: 0;
-    font-size: 18px;
-    color: #d1d5db;
+
+    align-self: center;
+
+    margin-top: 120px;
+
+    color: #cbd5e1;
+
+    font-size: 22px;
+
+    font-weight: 300;
+
+    text-align: center;
+
+    line-height: 1.6;
+
 }
+
+/* ==========================
+   Zone de saisie
+========================== */
 
 .input-container {
+
     display: flex;
-    gap: 10px;
 
-    padding: 20px;
+    align-items: center;
 
-    border-top: 1px solid #4a4b52;
+    gap: 16px;
+
+    padding: 24px 30px;
+
+    border-top: 1px solid rgba(255,255,255,.06);
+
+    background: rgba(15,23,42,.75);
+
+    backdrop-filter: blur(25px);
+
 }
 
+/* ==========================
+   Champ texte
+========================== */
+
 .input-container input {
+
     flex: 1;
 
-    padding: 14px;
+    padding: 18px 22px;
 
-    border: none;
-    border-radius: 10px;
+    border-radius: 18px;
 
-    background: #40414f;
+    border: 1px solid rgba(255,255,255,.06);
+
+    background: rgba(30,41,59,.85);
+
     color: white;
 
+    font-size: 15px;
+
+    transition: all .25s ease;
+
     outline: none;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.02);
+
 }
 
 .input-container input::placeholder {
-    color: #9ca3af;
+
+    color: #94a3b8;
+
 }
 
+.input-container input:focus {
+
+    border-color: #38bdf8;
+
+    box-shadow:
+        0 0 0 4px rgba(56,189,248,.15),
+        0 0 30px rgba(56,189,248,.10);
+
+}
+
+/* ==========================
+   Bouton Envoyer
+========================== */
+
 .input-container button {
-    padding: 0 20px;
+
+    padding: 16px 24px;
 
     border: none;
-    border-radius: 10px;
 
-    background: #10a37f;
-    color: white;
+    border-radius: 16px;
 
     cursor: pointer;
 
-    transition: background 0.2s;
+    font-weight: 600;
+
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #3b82f6,
+        #2563eb
+    );
+
+    transition: all .25s ease;
+
+    box-shadow:
+        0 8px 20px rgba(37,99,235,.35);
+
 }
 
 .input-container button:hover {
-    background: #0d8c6d;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(37,99,235,.45);
+
+}
+
+.input-container button:active {
+
+    transform: scale(.97);
+
 }

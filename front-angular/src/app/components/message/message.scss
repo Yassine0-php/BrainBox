@@ -1,68 +1,127 @@
 :host {
-
     display: flex;
-
+    width: 100%;
 }
 
-
+/* ==========================
+   Message
+========================== */
 
 .message {
 
     width: fit-content;
+    max-width: 70%;
 
-    max-width: 60%;
+    padding: 18px 22px;
 
-    padding: 15px;
+    border-radius: 18px;
 
-    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-    color: white;
+    color: #f8fafc;
+
+    border: 1px solid rgba(255,255,255,.06);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.35);
+
+    animation: messageAppear .3s ease;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+/* Petit effet au survol */
+
+.message:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.45);
 
 }
 
-
+/* ==========================
+   Message utilisateur
+========================== */
 
 .user {
 
     margin-left: auto;
 
-    background: #2563eb;
+    background: linear-gradient(
+        135deg,
+        #3b82f6,
+        #2563eb
+    );
 
 }
 
-
+/* ==========================
+   Message BrainBox
+========================== */
 
 .ia {
 
     margin-right: auto;
 
-    background: #444654;
+    background: linear-gradient(
+        135deg,
+        #1e293b,
+        #273449
+    );
+
+    box-shadow:
+        0 0 25px rgba(56,189,248,.08),
+        0 8px 24px rgba(0,0,0,.35);
 
 }
 
-
+/* ==========================
+   Auteur
+========================== */
 
 .author {
 
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-    margin-bottom: 8px;
+    font-size: 13px;
 
-    color: #10a37f;
+    font-weight: 700;
+
+    letter-spacing: .5px;
+
+    color: #38bdf8;
+
+    text-transform: uppercase;
 
 }
 
-
+/* ==========================
+   Contenu
+========================== */
 
 .content {
 
-    color: #e5e7eb;
+    color: #e2e8f0;
+
+    line-height: 1.7;
+
+    font-size: 15px;
+
+    word-break: break-word;
 
 }
 
-
-
-/* Conteneur du chargement */
+/* ==========================
+   Chargement
+========================== */
 
 .thinking {
 
@@ -70,31 +129,35 @@
 
     align-items: center;
 
-    gap: 10px;
+    gap: 12px;
+
+    color: #cbd5e1;
+
+    font-style: italic;
 
 }
 
-
-
-/* Cercle qui tourne */
+/* Loader */
 
 .loader {
 
-    width: 14px;
+    width: 16px;
 
-    height: 14px;
-
-    border: 3px solid #777;
-
-    border-top: 3px solid #10a37f;
+    height: 16px;
 
     border-radius: 50%;
 
-    animation: spin 0.8s linear infinite;
+    border: 3px solid rgba(255,255,255,.2);
+
+    border-top: 3px solid #38bdf8;
+
+    animation: spin .8s linear infinite;
 
 }
 
-
+/* ==========================
+   Animations
+========================== */
 
 @keyframes spin {
 
@@ -104,10 +167,29 @@
 
     }
 
-
     to {
 
         transform: rotate(360deg);
+
+    }
+
+}
+
+@keyframes messageAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
 
     }
 
