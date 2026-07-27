@@ -7,6 +7,7 @@ import {
 import { Message } from '../message/message';
 import { AssistantService } from '../../services/assistant';
 import { FormsModule } from '@angular/forms';
+import { ConversationService } from '../../services/conversation';
 
 interface ChatMessage {
   auteur: string;
@@ -32,23 +33,27 @@ export class ChatComponent {
   question = "";
   enCours = false;
 
-  messages: ChatMessage[] = [
-    {
-      auteur: "Utilisateur",
-      contenu: "Bonjour BrainBox",
-      type: "user"
-    },
-    {
-      auteur: "BrainBox",
-      contenu: "Bonjour 👋 Comment puis-je t'aider ?",
-      type: "ia"
-    }
-  ];
+ messages: ChatMessage[] = [];
 
   constructor(
     private assistantService: AssistantService,
+    private conversationService: ConversationService,
     private cd: ChangeDetectorRef
   ) {}
+
+  sauvegarderMessages(){
+
+    const conversation =
+    this.conversationService.getConversationActive();
+
+
+    if(conversation){
+
+      conversation.messages = this.messages;
+
+    }
+
+  }
 
   envoyer() {
 
@@ -65,6 +70,7 @@ export class ChatComponent {
       contenu: questionEnvoyee,
       type: "user"
     });
+    this.sauvegarderMessages();
 
     this.question = "";
 
@@ -96,13 +102,17 @@ export class ChatComponent {
           if (index !== -1) {
 
             this.messages[index].contenu = "";
-
+            this.sauvegarderMessages();
             if (response.reponse) {
 
               this.afficherProgressivement(
                 response.reponse,
                 this.messages[index]
               );
+
+              setTimeout(() => {
+                this.enCours = false;
+              }, response.reponse.length * 30 + 500);
 
             } else {
 
@@ -140,55 +150,74 @@ export class ChatComponent {
         }
 
       });
+      
 
   }
 
-  afficherProgressivement(
-    texte: string,
-    message: ChatMessage
-  ) {
+    afficherProgressivement(
+        texte: string,
+        message: ChatMessage
+        ) {
 
-    let index = 0;
+      let index = 0;
 
-    const interval = setInterval(() => {
+      const interval = setInterval(() => {
 
-      message.contenu += texte[index];
-      index++;
+        message.contenu += texte.charAt(index);
 
-      this.cd.detectChanges();
-      this.scrollVersLeBas();
+        index++;
 
-      if (index >= texte.length) {
+        this.cd.detectChanges();
+        this.scrollVersLeBas();
 
-        clearInterval(interval);
-        this.enCours = false;
 
-      }
+        if(index >= texte.length){
 
-    }, 30);
+          clearInterval(interval);
 
-  }
+          this.enCours = false;
+          console.log(this.conversationService.getConversationActive());
+          this.cd.detectChanges();
 
-  private scrollVersLeBas() {
+        }
 
-    setTimeout(() => {
+      }, 30);
 
-      const element = this.messagesContainer?.nativeElement;
+    }
 
-      if (element) {
+    private scrollVersLeBas() {
 
-        element.scrollTop = element.scrollHeight;
+      setTimeout(() => {
 
-      }
+        const element = this.messagesContainer?.nativeElement;
 
-    });
+        if (element) {
 
-  }
+          element.scrollTop = element.scrollHeight;
 
-  arreter() {
+        }
 
-    this.enCours = false;
+      });
 
-  }
+    }
+
+    arreter() {
+
+      this.enCours = false;
+
+    }
+    ngDoCheck(){
+
+        const conversation =
+        this.conversationService.getConversationActive();
+
+
+        if(conversation){
+
+          this.messages = conversation.messages;
+
+        }
+
+    }
 
 }

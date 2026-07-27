@@ -3,29 +3,41 @@
     <div class="header">
         <h1>BrainBox</h1>
 
-        <button>+</button>
+        <button (click)="nouvelleDiscussion()">
+            +
+        </button>
     </div>
+
+        
 
     <div class="discussions">
 
         <h2>Discussions</h2>
 
-        <div class="discussion">
-            Comment créer une API Express
+
+        <div 
+        class="discussion"
+        *ngFor="let discussion of discussions">
+
+            {{discussion.titre}}
+
         </div>
 
-        <div class="discussion">
-            Roadmap Angular
-        </div>
-
-        <div class="discussion">
-            Docker MongoDB
-        </div>
 
     </div>
+
+
+
+
+        
 
     <div class="footer">
         ⚙ Paramètres
     </div>
 
 </div>
+
+
+
+
+
