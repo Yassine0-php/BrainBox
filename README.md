@@ -316,7 +316,7 @@ L'application fonctionne entièrement en local, sans dépendre d'une API externe
 
 ---
 
-# 🔄 Fonctionnement du système RAG
+#  Fonctionnement du système RAG
 
 ```text
 Utilisateur
