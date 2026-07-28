@@ -1,112 +1,112 @@
-
 #  BrainBox
 
 **BrainBox** est un assistant IA local basé sur un système de **RAG (Retrieval Augmented Generation)**.
-Le projet combine une interface Angular, une API Express, une base de connaissances MongoDB et un modèle IA local exécuté avec Ollama.
+
+Le projet combine une interface **Angular**, une API **Express.js**, une base de connaissances **MongoDB** et un modèle d'intelligence artificielle local exécuté avec **Ollama**.
 
 L'objectif est de créer un assistant capable de répondre aux questions des utilisateurs en s'appuyant sur une base de connaissances personnalisée avant de générer une réponse avec l'IA.
 
 ---
 
-##  Fonctionnalités
+# Fonctionnalités
 
-###  Chat IA
+##  Chat IA
 
-* Interface de discussion moderne développée avec Angular
-* Envoi de questions à l'assistant
-* Affichage des réponses IA en temps réel
-* Indicateur de génération pendant la réflexion de l'IA
+- Interface de discussion moderne développée avec Angular
+- Envoi de questions à l'assistant
+- Affichage des réponses de l'IA
+- Indicateur de génération pendant la réflexion de l'IA
 
-###  Intelligence artificielle locale
+##  Intelligence artificielle locale
 
-* Utilisation d'un modèle IA local via Ollama
-* Pas de dépendance à une API externe
-* Les données restent en local
+- Utilisation d'un modèle IA local via Ollama
+- Aucune dépendance à une API externe
+- Les données restent sur la machine de l'utilisateur
 
-###  Système RAG
+##  Système RAG
 
-BrainBox utilise une base de connaissances pour améliorer les réponses :
+BrainBox améliore les réponses de l'IA grâce à une base de connaissances.
 
-1. L'utilisateur pose une question
-2. Le backend recherche les informations pertinentes dans MongoDB
-3. Les connaissances trouvées sont envoyées au modèle IA
-4. L'IA génère une réponse basée sur ces informations
+Fonctionnement :
 
-###  Gestion des connaissances
+1. L'utilisateur pose une question.
+2. Le backend recherche les connaissances pertinentes dans MongoDB.
+3. Les connaissances trouvées sont envoyées au modèle IA.
+4. Le modèle Mistral génère une réponse en utilisant ces informations.
 
-* Stockage des connaissances dans MongoDB
-* Recherche par mots-clés
-* Utilisation des titres, contenus et tags
+## Gestion des connaissances
 
-###  Dockerisation
+- Ajout de connaissances
+- Modification
+- Suppression
+- Consultation
+- Recherche par mots-clés
+- Utilisation des titres, contenus et tags
 
-Le projet peut être lancé avec Docker Compose :
+##  Dockerisation
 
-* Frontend Angular servi avec Nginx
-* Backend Express
-* MongoDB
-* Ollama pour le modèle IA
+Le projet peut être exécuté avec Docker Compose.
+
+Les conteneurs lancés sont :
+
+- Frontend Angular (Nginx)
+- Backend Express
+- MongoDB
+- Ollama
 
 ---
-
-
-
 
 #  Technologies utilisées
 
 ## Frontend
 
-* Angular
-* TypeScript
-* HTML / SCSS
-* Nginx
+- Angular
+- TypeScript
+- HTML
+- SCSS
+- Nginx
 
 ## Backend
 
-* Node.js
-* Express.js
-* Axios
-# routes 
-
-- POST http://localhost:3000/api/connaissances ajouterConnaissance
-- PUT http://localhost:3000/api/connaissances/ modifierConnaissance
-- GET http://localhost:3000/api/connaissances  listerConnaissance
-- DEL http://localhost:3000/api/connaissances/10 supprimerConnaissancce par id
-- GET http://localhost:3000/api/connaissances/1 consulterConnaissance par id
-- GET http://localhost:3000/api/connaissances/recherche?mot=ia rechercheConnaissance
+- Node.js
+- Express.js
+- Axios
+- Mongoose
 
 ## Base de données
 
-* MongoDB ATLAS/compass
+- MongoDB Atlas
+- MongoDB Compass
 
 ## Intelligence artificielle
 
-* Ollama
-* Modèle Mistral
+- Ollama
+- Modèle Mistral 7B
 
 ## Déploiement
 
-* Docker
-* Docker Compose
+- Docker
+- Docker Compose
 
 ---
 
-#  Installation en local
+#  Prérequis
 
-## Prérequis
+Avant de lancer le projet, installer :
 
-Installer :
-
-* Node.js
-* Angular CLI
-* Docker Desktop
-* Ollama
+- Node.js (v20 ou supérieure)
+- npm
+- Angular CLI
+- Docker Desktop
+- Git
+- Ollama
+- Un compte MongoDB Atlas (ou MongoDB Compass)
 
 ---
 
-#  Installation du projet
+#  Installation
 
-Cloner le repository :
+## 1. Cloner le projet
 
 ```bash
 git clone https://github.com/Yassine0-php/BrainBox.git
@@ -114,17 +114,91 @@ git clone https://github.com/Yassine0-php/BrainBox.git
 cd BrainBox
 ```
 
+## 2. Installer les dépendances
+
+### Backend
+
+```bash
+cd back-express
+npm install
+```
+
+### Frontend
+
+```bash
+cd ../front-angular
+npm install
+```
+
 ---
 
-#  Lancement avec Docker
+#  Configuration de MongoDB Atlas
 
-Construire et démarrer les conteneurs :
+Créer un cluster MongoDB Atlas puis récupérer la chaîne de connexion.
+
+Créer un fichier `.env` dans le dossier **back-express** :
+
+```env
+PORT=3000
+
+MONGO_URI=mongodb+srv://utilisateur:motdepasse@cluster.mongodb.net/brainbox?retryWrites=true&w=majority
+```
+
+Remplacer :
+
+- `utilisateur`
+- `motdepasse`
+- `cluster`
+
+par vos informations MongoDB Atlas.
+
+Si vous utilisez MongoDB Compass, assurez-vous que votre base de données est accessible avec cette même chaîne de connexion.
+
+---
+
+#  Lancement d'Ollama
+
+Installer Ollama :
+
+https://ollama.com
+
+Télécharger le modèle utilisé :
+
+```bash
+ollama pull mistral
+```
+
+Vérifier son installation :
+
+```bash
+ollama list
+```
+
+Lancer Ollama :
+
+```bash
+ollama serve
+```
+
+Le serveur sera disponible sur :
+
+```
+http://localhost:11434
+```
+
+---
+
+#  Lancement de l'application
+
+## Avec Docker
+
+Construire puis lancer les conteneurs :
 
 ```bash
 docker compose up --build
 ```
 
-Les services seront disponibles :
+Les services seront disponibles sur :
 
 Frontend :
 
@@ -146,78 +220,124 @@ http://localhost:11434
 
 ---
 
-# Installation du modèle IA
+## Sans Docker
 
-Télécharger le modèle utilisé :
-
-```bash
-ollama pull mistral
-```
-
-Vérifier les modèles disponibles :
+### Backend
 
 ```bash
-ollama list
+cd back-express
+npm start
 ```
-# choix du modéle IA Mistrall
 
-J'ai choisi Mistral 7B car il représente un bon compromis entre les performances du modèle et les contraintes matérielles. Mon application doit fonctionner localement avec Ollama, sans dépendre d'une API externe. Avec une machine équipée de 16 Go de RAM, Mistral 7B permet d'obtenir des réponses pertinentes tout en conservant des temps de réponse acceptables.
+ou
 
+```bash
+node index.js
+```
 
+### Frontend
 
+```bash
+cd front-angular
+ng serve
+```
 
 ---
 
-#  API Backend
+#  Routes disponibles
 
-## Poser une question à l'assistant
+## Assistant IA
 
-### Endpoint
+### Poser une question
 
 ```
 POST /api/assistant/question
 ```
 
-### Body
+Exemple :
 
 ```json
 {
-  "question": "Explique Angular"
-}
-```
-
-### Réponse
-
-```json
-{
-  "reponse": "Angular est un framework..."
+    "question": "Explique Angular"
 }
 ```
 
 ---
 
-#  Fonctionnement du RAG
+## Gestion des connaissances
+
+### Ajouter une connaissance
 
 ```
+POST /api/connaissances
+```
+
+### Modifier une connaissance
+
+```
+PUT /api/connaissances/:id
+```
+
+### Lister toutes les connaissances
+
+```
+GET /api/connaissances
+```
+
+### Consulter une connaissance
+
+```
+GET /api/connaissances/:id
+```
+
+### Supprimer une connaissance
+
+```
+DELETE /api/connaissances/:id
+```
+
+### Rechercher des connaissances
+
+```
+GET /api/connaissances/recherche?mot=ia
+```
+
+---
+
+#  Modèle utilisé
+
+Le projet utilise le modèle **Mistral 7B** exécuté localement grâce à **Ollama**.
+
+### Pourquoi Mistral 7B ?
+
+J'ai choisi **Mistral 7B** car il représente un excellent compromis entre les performances et les ressources matérielles nécessaires.
+
+L'application fonctionne entièrement en local, sans dépendre d'une API externe. Avec une machine équipée de **16 Go de RAM**, Mistral 7B fournit des réponses pertinentes tout en conservant des temps de réponse satisfaisants.
+
+---
+
+# 🔄 Fonctionnement du système RAG
+
+```text
 Utilisateur
-    |
-    v
-Question
-    |
-    v
-Angular
-    |
-    v
-API Express
-    |
-    +----------------+
-    |                |
-    v                v
-MongoDB          Ollama
-(Base de         (Mistral)
+      │
+      ▼
+  Question
+      │
+      ▼
+Frontend Angular
+      │
+      ▼
+ API Express
+      │
+ ┌────┴───────────┐
+ │                │
+ ▼                ▼
+MongoDB        Ollama
+(Base de      (Mistral)
 connaissances)
-    |
-    v
+      │
+      ▼
 Réponse IA
 ```
 
@@ -225,31 +345,31 @@ Réponse IA
 
 #  Sécurité et données
 
-BrainBox fonctionne localement :
+BrainBox fonctionne entièrement en local :
 
-* Les conversations restent sur la machine
-* Aucun appel vers une API IA externe
-* Les connaissances sont stockées dans MongoDB local
+- Les conversations restent sur la machine de l'utilisateur.
+- Aucun appel n'est effectué vers une API d'IA externe.
+- Les connaissances sont stockées dans MongoDB.
 
 ---
 
 #  Améliorations prévues
 
-* [ ] Authentification utilisateur
-* [ ] Historique des conversations
-* [ ] Gestion des utilisateurs
-* [ ] Ajout de documents PDF dans la base RAG
-* [ ] Amélioration du système de recherche
-
+- [ ] Authentification utilisateur
+- [ ] Historique des conversations
+- [ ] Gestion des utilisateurs
+- [ ] Import de documents PDF dans la base RAG
+- [ ] Recherche vectorielle avec embeddings
+- [ ] Amélioration du système RAG
 
 ---
 
-#  Auteur
-
-Projet réalisé dans le cadre d'un apprentissage en développement IA.
-
-Stack principale :
-
-**Angular + Express + MongoDB + Ollama + Docker**
 
 
+**Stack principale :**
+
+- Angular
+- Express.js
+- MongoDB
+- Ollama
+- Docker
