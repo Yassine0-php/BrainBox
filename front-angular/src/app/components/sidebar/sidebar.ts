@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ConversationService } from '../../services/conversation';
+import { ConversationService,Conversation } from '../../services/conversation';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,10 +10,21 @@ import { ConversationService } from '../../services/conversation';
 })
 export class Sidebar {
 
+  discussions:Conversation[]=[];
 
-  constructor(
-    private conversationService: ConversationService
-  ){}
+    constructor(
+  private conversationService: ConversationService
+  ){
+       this.conversationService.chargerConversations();
+
+      this.conversationService.conversations$
+      .subscribe(conversations=>{
+
+        this.discussions = conversations;
+
+      });
+
+    }
 
 
   nouvelleDiscussion(){
@@ -23,9 +34,11 @@ export class Sidebar {
   }
 
 
-  get discussions(){
+  
+  
+  selectionnerDiscussion(discussion:any){
 
-    return this.conversationService.getConversations();
+    this.conversationService.changerConversation(discussion);
 
   }
 

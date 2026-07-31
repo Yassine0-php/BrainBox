@@ -15,6 +15,7 @@ const connectDB = require("./config/database");
 
 const connaissanceRoutes = require("./routes/connaissanceRoute.js");
 const iaRoutes = require("./routes/assistantRoute.js");
+const conversationRoute = require("./routes/conversationRoute.js");
 
 
 connectDB();
@@ -25,7 +26,10 @@ app.use(cors({
 
 app.use(express.json());
 
-
+app.use(
+    "/api/conversations",
+    conversationRoute
+);
 
 // app.use(
 //     "/api/connaissances",

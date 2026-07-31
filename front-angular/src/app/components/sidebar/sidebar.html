@@ -15,10 +15,11 @@
         <h2>Discussions</h2>
 
 
-        <div 
-        class="discussion"
-        *ngFor="let discussion of discussions">
-
+       <div 
+            class="discussion"
+            *ngFor="let discussion of discussions"
+            (click)="selectionnerDiscussion(discussion)">
+            
             {{discussion.titre}}
 
         </div>

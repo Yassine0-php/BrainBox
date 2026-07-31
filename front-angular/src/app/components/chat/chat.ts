@@ -8,6 +8,7 @@ import { Message } from '../message/message';
 import { AssistantService } from '../../services/assistant';
 import { FormsModule } from '@angular/forms';
 import { ConversationService } from '../../services/conversation';
+import { Subscription } from 'rxjs';
 
 interface ChatMessage {
   auteur: string;
@@ -30,6 +31,8 @@ export class ChatComponent {
   @ViewChild('messagesContainer')
   messagesContainer!: ElementRef<HTMLDivElement>;
 
+  subscription!: Subscription;
+
   question = "";
   enCours = false;
 
@@ -39,7 +42,26 @@ export class ChatComponent {
     private assistantService: AssistantService,
     private conversationService: ConversationService,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+        this.subscription =
+      this.conversationService.conversationActive$
+      .subscribe(conversation => {
+
+
+        
+        if(conversation){
+
+          this.messages = conversation.messages;
+
+          this.cd.detectChanges();
+          this.scrollVersLeBas();
+
+        }
+        
+
+
+      });
+    }
 
   sauvegarderMessages(){
 
@@ -50,6 +72,9 @@ export class ChatComponent {
     if(conversation){
 
       conversation.messages = this.messages;
+      this.conversationService
+      .sauvegarderConversation(conversation)
+      .subscribe();
 
     }
 
@@ -71,6 +96,18 @@ export class ChatComponent {
       type: "user"
     });
     this.sauvegarderMessages();
+
+    const conversation =this.conversationService.getConversationActive();
+
+
+    if(conversation){
+
+      this.conversationService.mettreAJourTitre(
+        conversation,
+        questionEnvoyee
+      );
+
+    }
 
     this.question = "";
 
@@ -110,9 +147,7 @@ export class ChatComponent {
                 this.messages[index]
               );
 
-              setTimeout(() => {
-                this.enCours = false;
-              }, response.reponse.length * 30 + 500);
+            
 
             } else {
 
@@ -176,7 +211,8 @@ export class ChatComponent {
           clearInterval(interval);
 
           this.enCours = false;
-          console.log(this.conversationService.getConversationActive());
+          
+          this.sauvegarderMessages();
           this.cd.detectChanges();
 
         }
@@ -206,18 +242,6 @@ export class ChatComponent {
       this.enCours = false;
 
     }
-    ngDoCheck(){
-
-        const conversation =
-        this.conversationService.getConversationActive();
-
-
-        if(conversation){
-
-          this.messages = conversation.messages;
-
-        }
-
-    }
+  
 
 }
