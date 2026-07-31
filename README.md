@@ -9,6 +9,12 @@ L'objectif est de créer un assistant capable de répondre aux questions des uti
 ---
 
 # Fonctionnalités
+Appuyer sur le boutton + pour afficher les discussions précedente qui sont enregistrer dans la bdd et aussi pour créer une nouvelle discussion.
+
+-Conversation avec BrainBox avec seulement les connaissances de la BDD
+-pendant la géneration de la réponse de brainbox pas possible de renvoyer une nouvelle requête
+-création de nouvelle discussion en appuyant sur le boutton +
+-sauvegarde des conversations dans la bdd
 
 ##  Chat IA
 

@@ -8,37 +8,44 @@
         </button>
     </div>
 
-        
-
     <div class="discussions">
 
         <h2>Discussions</h2>
 
-
-       <div 
+        <div 
             class="discussion"
-            *ngFor="let discussion of discussions"
-            (click)="selectionnerDiscussion(discussion)">
-            
-            {{discussion.titre}}
+            *ngFor="let discussion of discussions">
+
+            <span
+                (click)="selectionnerDiscussion(discussion)">
+                {{discussion.titre}}
+            </span>
+
+            <button
+                class="menu-button"
+                (click)="ouvrirMenu($event,discussion)">
+                ...
+            </button>
+
+            <div 
+                class="menu"
+                *ngIf="menuOuvert === discussion"
+                (click)="$event.stopPropagation()">
+
+               <button
+                    type="button"
+                    (click)="supprimerDiscussion($event,discussion)">
+                    Supprimer
+                </button>
+
+            </div>
 
         </div>
 
-
     </div>
-
-
-
-
-        
 
     <div class="footer">
         ⚙ Paramètres
     </div>
 
 </div>
-
-
-
-
-

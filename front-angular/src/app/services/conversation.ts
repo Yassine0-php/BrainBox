@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 export interface Conversation {
+  _id?:string;
   id:number;
   titre:string;
   messages:any[];
@@ -23,10 +24,14 @@ export class ConversationService {
   new BehaviorSubject<Conversation[]>([]);
 
   private conversationActiveSubject =
-  new BehaviorSubject<Conversation|null>(null);
-
+    new BehaviorSubject<Conversation>({
+      id: 0,
+      titre: "Nouvelle discussion",
+      messages: []
+    });
+  
   conversationActive$ =
-  this.conversationActiveSubject.asObservable();
+    this.conversationActiveSubject.asObservable();
 
   conversations$ =
   this.conversationsSubject.asObservable();
@@ -43,8 +48,23 @@ export class ConversationService {
     .get<Conversation[]>(this.apiUrl)
     .subscribe(conversations=>{
 
+      console.log("Conversations reçues :", conversations);
+
       this.conversations=conversations;
       this.conversationsSubject.next(conversations);
+
+      console.log("Tableau interne :", this.conversations);
+      if(conversations.length > 0){
+
+        this.conversationActiveSubject.next(conversations[0]);
+
+      } else {
+        this.conversationActiveSubject.next({
+          id: 0,
+          titre: "Nouvelle discussion",
+          messages: []
+        });
+      }
 
     });
 
@@ -67,8 +87,13 @@ export class ConversationService {
 
       this.conversations.unshift(conversation);
 
-      this.conversationActiveSubject.next(conversation);
-      this.conversationsSubject.next(this.conversations);
+      this.conversationsSubject.next(
+        this.conversations
+      );
+
+      this.conversationActiveSubject.next(
+        conversation
+      );
 
     });
 
@@ -95,9 +120,15 @@ export class ConversationService {
 
   }
 
-  changerConversation(conversation:Conversation){
+  changerConversation(conversation: Conversation | null){
 
-    this.conversationActiveSubject.next(conversation);
+    this.conversationActiveSubject.next(
+      conversation ?? {
+        id: 0,
+        titre: "Nouvelle discussion",
+        messages: []
+      }
+    );
 
   }
 
@@ -116,4 +147,11 @@ export class ConversationService {
 
   }
 
+  supprimerConversation(id:string){
+
+      return this.http.delete(
+        `${this.apiUrl}/${id}`
+      );
+
+  }
 }

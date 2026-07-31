@@ -35,6 +35,7 @@ export class ChatComponent {
 
   question = "";
   enCours = false;
+  conversationActive:any = null;
 
  messages: ChatMessage[] = [];
 
@@ -42,25 +43,27 @@ export class ChatComponent {
     private assistantService: AssistantService,
     private conversationService: ConversationService,
     private cd: ChangeDetectorRef
-  ) {
-        this.subscription =
-      this.conversationService.conversationActive$
-      .subscribe(conversation => {
+  ){
+      this.subscription =
+        this.conversationService.conversationActive$
+        .subscribe(conversation => {
 
+            this.conversationActive = conversation;
 
-        
-        if(conversation){
+            if(conversation){
 
-          this.messages = conversation.messages;
+              this.messages = conversation.messages;
 
-          this.cd.detectChanges();
-          this.scrollVersLeBas();
+            } else {
 
-        }
-        
+              this.messages = [];
 
+            }
 
-      });
+            this.cd.detectChanges();
+
+        });
+
     }
 
   sauvegarderMessages(){

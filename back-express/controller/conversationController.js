@@ -95,3 +95,40 @@ exports.updateConversation = async(req,res)=>{
     }
 
 };
+
+exports.deleteConversation = async(req,res)=>{
+
+    try{
+
+        console.log("ID reçu :", req.params.id);
+
+
+        const conversation =
+        await Conversation.findByIdAndDelete(
+            req.params.id
+        );
+
+
+        if(!conversation){
+
+            return res.status(404).json({
+                message:"Conversation introuvable"
+            });
+
+        }
+
+
+        res.json({
+            message:"Conversation supprimée"
+        });
+
+
+    }catch(error){
+
+        res.status(500).json({
+            message:error.message
+        });
+
+    }
+
+};

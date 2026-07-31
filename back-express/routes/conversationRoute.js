@@ -29,5 +29,8 @@ router.put(
 conversationController.updateConversation
 );
 
-
+router.delete(
+"/:id",
+conversationController.deleteConversation
+);
 module.exports = router;
