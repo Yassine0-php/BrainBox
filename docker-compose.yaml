@@ -1,6 +1,7 @@
 services:
 
   frontend:
+    image: yassine134/brainbox-frontend:latest
     build:
       context: ./front-angular
       dockerfile: Dockerfile
@@ -13,6 +14,7 @@ services:
 
 
   backend:
+    image: yassine134/brainbox-backend:latest
     build:
       context: ./back-express
       dockerfile: Dockerfile
